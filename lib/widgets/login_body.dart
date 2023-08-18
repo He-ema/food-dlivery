@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:food/views/login_view.dart';
-import 'package:food/widgets/custom_button.dart';
 
+import 'custom_button.dart';
 import 'custom_text_form_field.dart';
 import 'outside_register.dart';
 
-class RegisterBody extends StatefulWidget {
-  RegisterBody({super.key});
+class LoginBody extends StatefulWidget {
+  LoginBody({super.key});
 
   @override
-  State<RegisterBody> createState() => _RegisterBodyState();
+  State<LoginBody> createState() => _LoginBodyState();
 }
 
-class _RegisterBodyState extends State<RegisterBody> {
+class _LoginBodyState extends State<LoginBody> {
   final GlobalKey<FormState> formKey = GlobalKey();
 
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
@@ -40,18 +39,11 @@ class _RegisterBodyState extends State<RegisterBody> {
                   height: 25,
                 ),
                 Text(
-                  'Sign up for free',
+                  'Login to your account',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
                 SizedBox(
                   height: 25,
-                ),
-                CustomTextFormField(
-                  hint: 'User Name',
-                  icon: Icon(
-                    Icons.person,
-                    color: Theme.of(context).primaryColor,
-                  ),
                 ),
                 SizedBox(
                   height: 12,
@@ -91,22 +83,32 @@ class _RegisterBodyState extends State<RegisterBody> {
                     ),
                   ],
                 ),
-                CustomButton(
-                  text: 'Create account',
-                  onTap: () {
-                    if (formKey.currentState!.validate()) {
-                    } else {
-                      autovalidateMode = AutovalidateMode.always;
-                      setState(() {});
-                    }
-                  },
+                SizedBox(
+                  height: 19,
                 ),
+                Text(
+                  'Forgot your password ?',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+                CustomButton(
+                    text: 'Login',
+                    onTap: () {
+                      if (formKey.currentState!.validate()) {
+                      } else {
+                        autovalidateMode = AutovalidateMode.always;
+                        setState(() {});
+                      }
+                    }),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, LoginView.id);
+                    Navigator.pop(context);
                   },
                   child: Text(
-                    'Alraedy have an account ?',
+                    'Doesn\'t have an account ?',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.bold,

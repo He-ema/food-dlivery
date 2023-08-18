@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food/constants.dart';
+import 'package:food/views/login_view.dart';
 import 'package:food/views/onboarding_view.dart';
 import 'package:food/views/register_view.dart';
 import 'package:food/views/splash_view.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         Splasher.id: (context) => Splasher(),
         RegisterView.id: (context) => RegisterView(),
         OnBoarding.id: (context) => OnBoarding(),
+        LoginView.id: (context) => LoginView(),
       },
       initialRoute: Splasher.id,
     );

@@ -14,6 +14,9 @@ class OutsideRegister extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.4,
       height: 50,
       decoration: BoxDecoration(
+        border: Border.all(
+          color: Theme.of(context).primaryColor,
+        ),
         borderRadius: BorderRadius.circular(16),
         color: color,
       ),
