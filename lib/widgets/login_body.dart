@@ -21,7 +21,7 @@ class _LoginBodyState extends State<LoginBody> {
     return SingleChildScrollView(
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Form(
             autovalidateMode: autovalidateMode,
             key: formKey,

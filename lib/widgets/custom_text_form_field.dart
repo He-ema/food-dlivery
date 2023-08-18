@@ -8,13 +8,13 @@ class CustomTextFormField extends StatelessWidget {
       this.onSaved,
       this.onChanged,
       this.controller,
-      required this.icon});
+      this.icon});
   final TextEditingController? controller;
   final String hint;
   final int maxLines;
   final void Function(String?)? onSaved;
   final Function(String)? onChanged;
-  final Icon icon;
+  final Icon? icon;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -33,11 +33,11 @@ class CustomTextFormField extends StatelessWidget {
         filled: true,
         fillColor: Colors.white,
         prefixIcon: icon,
-        border: buildBorder(),
+        border: buildBorder(Theme.of(context).primaryColor),
         hintText: hint,
         hintStyle: const TextStyle(color: Colors.grey),
-        enabledBorder: buildBorder(),
-        focusedBorder: buildBorder(),
+        enabledBorder: buildBorder(Theme.of(context).primaryColor),
+        focusedBorder: buildBorder(Theme.of(context).primaryColor),
       ),
     );
   }
@@ -46,6 +46,7 @@ class CustomTextFormField extends StatelessWidget {
     return OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide(
+          width: 0.1,
           color: color ?? const Color.fromARGB(255, 107, 106, 106),
         ));
   }

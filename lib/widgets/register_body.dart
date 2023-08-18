@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food/views/info_view.dart';
 import 'package:food/views/login_view.dart';
 import 'package:food/widgets/custom_button.dart';
 
@@ -22,7 +23,7 @@ class _RegisterBodyState extends State<RegisterBody> {
     return SingleChildScrollView(
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Form(
             autovalidateMode: autovalidateMode,
             key: formKey,
@@ -95,6 +96,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                   text: 'Create account',
                   onTap: () {
                     if (formKey.currentState!.validate()) {
+                      Navigator.pushNamed(context, InfoView.id);
                     } else {
                       autovalidateMode = AutovalidateMode.always;
                       setState(() {});
