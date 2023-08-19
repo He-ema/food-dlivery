@@ -77,21 +77,6 @@ class _RegisterBodyState extends State<RegisterBody> {
                 SizedBox(
                   height: 10,
                 ),
-                const Row(
-                  children: [
-                    OutsideRegister(
-                      image: 'assets/images/facebook.png',
-                      text: 'Facebook',
-                      color: Color(0xff3a559f),
-                    ),
-                    Spacer(),
-                    OutsideRegister(
-                      image: 'assets/images/search.png',
-                      text: 'Google',
-                      color: Color.fromARGB(255, 46, 112, 167),
-                    ),
-                  ],
-                ),
                 CustomButton(
                   text: 'Create account',
                   onTap: () {
@@ -115,6 +100,15 @@ class _RegisterBodyState extends State<RegisterBody> {
                       decoration: TextDecoration.underline,
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 32,
+                ),
+                OutsideRegister(
+                  onTap: () {},
+                  image: 'assets/images/search.png',
+                  text: 'Google',
+                  color: Color.fromARGB(255, 46, 112, 167),
                 ),
               ],
             ),
