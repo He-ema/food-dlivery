@@ -68,21 +68,6 @@ class _LoginBodyState extends State<LoginBody> {
                 SizedBox(
                   height: 10,
                 ),
-                const Row(
-                  children: [
-                    OutsideRegister(
-                      image: 'assets/images/facebook.png',
-                      text: 'Facebook',
-                      color: Color(0xff3a559f),
-                    ),
-                    Spacer(),
-                    OutsideRegister(
-                      image: 'assets/images/search.png',
-                      text: 'Google',
-                      color: Color.fromARGB(255, 46, 112, 167),
-                    ),
-                  ],
-                ),
                 SizedBox(
                   height: 19,
                 ),
@@ -115,6 +100,14 @@ class _LoginBodyState extends State<LoginBody> {
                       decoration: TextDecoration.underline,
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 55,
+                ),
+                OutsideRegister(
+                  image: 'assets/images/search.png',
+                  text: 'Google',
+                  color: Color.fromARGB(255, 46, 112, 167),
                 ),
               ],
             ),

@@ -33,7 +33,7 @@ class OTPViewBody extends StatelessWidget {
                 height: 16,
               ),
               Text(
-                'Code sent to your phone number. Check your messages',
+                'Code sent to your Email. Check your inbox',
                 style: TextStyle(color: Colors.black, fontSize: 16),
               ),
               SizedBox(

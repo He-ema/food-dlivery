@@ -15,8 +15,11 @@ class CustomTextFormField extends StatelessWidget {
   final void Function(String?)? onSaved;
   final Function(String)? onChanged;
   final Icon? icon;
+
   @override
   Widget build(BuildContext context) {
+    bool isUername = false;
+    hint == 'User Name' ? isUername = true : false;
     return TextFormField(
       controller: controller,
       onChanged: onChanged,
@@ -25,7 +28,11 @@ class CustomTextFormField extends StatelessWidget {
         if (value!.isEmpty ?? true) {
           return 'This field can\'t be empty';
         } else {
-          return null;
+          if (isUername && value.contains(' ')) {
+            return 'User Name cant have spaces';
+          } else {
+            return null;
+          }
         }
       },
       maxLines: maxLines,

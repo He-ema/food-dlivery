@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "940918793229",
+    "project_id": "food-dlivery-97e93",
+    "storage_bucket": "food-dlivery-97e93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940918793229:android:b2e40aa6fb17bc79196144",
+        "android_client_info": {
+          "package_name": "com.example.food"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "940918793229-fva7je4dobj02q4e9ceuapnh7f92kjlc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1mp-P5qKynhSCaYZq_9NKWzxQCMKEMtQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "940918793229-fva7je4dobj02q4e9ceuapnh7f92kjlc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
