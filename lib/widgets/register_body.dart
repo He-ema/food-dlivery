@@ -1,13 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food/cubits/cubit/auth_cubit_cubit.dart';
+import 'package:food/views/home_view.dart';
 import 'package:food/views/info_view.dart';
 import 'package:food/views/login_view.dart';
 import 'package:food/widgets/custom_button.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import '../constants.dart';
 import 'custom_text_form_field.dart';
 import 'outside_register.dart';
 
@@ -22,7 +23,8 @@ class _RegisterBodyState extends State<RegisterBody> {
   final GlobalKey<FormState> formKey = GlobalKey();
 
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-
+  CollectionReference users =
+      FirebaseFirestore.instance.collection(kUseresCollectionReference);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthCubit, AuthCubitState>(
@@ -120,7 +122,15 @@ class _RegisterBodyState extends State<RegisterBody> {
                               .signInWithGoogle();
                           if (BlocProvider.of<AuthCubit>(context).name !=
                               null) {
-                            Navigator.pushNamed(context, InfoView.id);
+                            var doc = users
+                                .doc(BlocProvider.of<AuthCubit>(context).email);
+                            await doc.get().then((doc) {
+                              if (doc.exists) {
+                                Navigator.pushNamed(context, HomeView.id);
+                              } else {
+                                Navigator.pushNamed(context, InfoView.id);
+                              }
+                            });
                           }
                         },
                         image: 'assets/images/search.png',

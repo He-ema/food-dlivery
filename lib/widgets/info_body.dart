@@ -5,12 +5,14 @@ import 'package:food/views/OTP_view.dart';
 import 'package:food/widgets/custom_button.dart';
 import 'package:food/widgets/custom_text_form_field.dart';
 
+import '../views/email_created_congrats_view.dart';
 import 'custom_icon.dart';
 
 class InfoViewBody extends StatefulWidget {
   InfoViewBody({super.key});
   TextEditingController _controller = TextEditingController();
   TextEditingController _controller2 = TextEditingController();
+  TextEditingController _controller3 = TextEditingController();
   @override
   State<InfoViewBody> createState() => _InfoViewBodyState();
 }
@@ -82,6 +84,7 @@ class _InfoViewBodyState extends State<InfoViewBody> {
               ),
               CustomTextFormField(
                 hint: 'Phone Number',
+                controller: widget._controller3,
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.1,
@@ -90,7 +93,12 @@ class _InfoViewBodyState extends State<InfoViewBody> {
                 text: 'Next',
                 onTap: () {
                   if (formKey.currentState!.validate()) {
-                    Navigator.pushNamed(context, OTPView.id);
+                    BlocProvider.of<AuthCubit>(context).createUser(
+                        firstName: widget._controller.text,
+                        secondName: widget._controller2.text,
+                        phone: widget._controller3.text,
+                        email: BlocProvider.of<AuthCubit>(context).email!);
+                    Navigator.pushNamed(context, EmailCreatedCongratsView.id);
                   } else {
                     autovalidateMode = AutovalidateMode.always;
                     setState(() {});
@@ -117,7 +125,6 @@ class _InfoViewBodyState extends State<InfoViewBody> {
         text += BlocProvider.of<AuthCubit>(context).name![i];
       }
     }
-    print(name);
     return name;
   }
 }

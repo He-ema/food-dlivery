@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food/constants.dart';
 import 'package:food/cubits/cubit/auth_cubit_cubit.dart';
 import 'package:food/views/OTP_view.dart';
+import 'package:food/views/email_created_congrats_view.dart';
+import 'package:food/views/home_view.dart';
 import 'package:food/views/info_view.dart';
 import 'package:food/views/login_view.dart';
 import 'package:food/views/onboarding_view.dart';
@@ -45,6 +47,8 @@ class MyApp extends StatelessWidget {
           LoginView.id: (context) => LoginView(),
           InfoView.id: (context) => InfoView(),
           OTPView.id: (context) => OTPView(),
+          EmailCreatedCongratsView.id: (context) => EmailCreatedCongratsView(),
+          HomeView.id: (context) => HomeView(),
         },
         initialRoute: Splasher.id,
       ),
