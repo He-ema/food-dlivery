@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food/constants.dart';
 import 'package:food/cubits/cubit/auth_cubit_cubit.dart';
 import 'package:food/views/OTP_view.dart';
 import 'package:food/widgets/custom_button.dart';
 import 'package:food/widgets/custom_text_form_field.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../views/email_created_congrats_view.dart';
 import 'custom_icon.dart';
@@ -37,77 +39,97 @@ class _InfoViewBodyState extends State<InfoViewBody> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25.0),
-      child: SingleChildScrollView(
-        child: Form(
-          autovalidateMode: autovalidateMode,
-          key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 32,
+      child: BlocBuilder<AuthCubit, AuthCubitState>(
+        builder: (context, state) {
+          return ModalProgressHUD(
+            inAsyncCall: state is AuthCubitLoading ? true : false,
+            child: SingleChildScrollView(
+              child: Form(
+                autovalidateMode: autovalidateMode,
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 32,
+                    ),
+                    CustomIcon(),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      'Fill in your bio to get started',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      'This data will be displayed in your account profile for security',
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                    ),
+                    CustomTextFormField(
+                      controller: widget._controller,
+                      hint: 'First Name',
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    CustomTextFormField(
+                      controller: widget._controller2,
+                      hint: 'Last Name',
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    CustomTextFormField(
+                      hint: 'Phone Number',
+                      controller: widget._controller3,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.1,
+                    ),
+                    CustomButton(
+                      text: 'Next',
+                      onTap: () {
+                        if (formKey.currentState!.validate()) {
+                          BlocProvider.of<AuthCubit>(context).createUser(
+                              firstName: widget._controller.text,
+                              secondName: widget._controller2.text,
+                              phone: widget._controller3.text,
+                              email: BlocProvider.of<AuthCubit>(context)
+                                          .email ==
+                                      null
+                                  ? BlocProvider.of<AuthCubit>(context)
+                                      .ordinarySignInEmail!
+                                  : BlocProvider.of<AuthCubit>(context).email!,
+                              state:
+                                  BlocProvider.of<AuthCubit>(context).email ==
+                                          null
+                                      ? kNotVerified
+                                      : kVerified);
+                          BlocProvider.of<AuthCubit>(context).email == null
+                              ? Navigator.pushNamed(context, OTPView.id)
+                              : Navigator.pushNamed(
+                                  context, EmailCreatedCongratsView.id);
+                        } else {
+                          autovalidateMode = AutovalidateMode.always;
+                          setState(() {});
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
-              CustomIcon(),
-              SizedBox(
-                height: 16,
-              ),
-              Text(
-                'Fill in your bio to get started',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Text(
-                'This data will be displayed in your account profile for security',
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.2,
-              ),
-              CustomTextFormField(
-                controller: widget._controller,
-                hint: 'First Name',
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              CustomTextFormField(
-                controller: widget._controller2,
-                hint: 'Last Name',
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              CustomTextFormField(
-                hint: 'Phone Number',
-                controller: widget._controller3,
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-              ),
-              CustomButton(
-                text: 'Next',
-                onTap: () {
-                  if (formKey.currentState!.validate()) {
-                    BlocProvider.of<AuthCubit>(context).createUser(
-                        firstName: widget._controller.text,
-                        secondName: widget._controller2.text,
-                        phone: widget._controller3.text,
-                        email: BlocProvider.of<AuthCubit>(context).email!);
-                    Navigator.pushNamed(context, EmailCreatedCongratsView.id);
-                  } else {
-                    autovalidateMode = AutovalidateMode.always;
-                    setState(() {});
-                  }
-                },
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
