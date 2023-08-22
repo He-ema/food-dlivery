@@ -33,7 +33,7 @@ class _RegisterBodyState extends State<RegisterBody> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthCubitState>(
       listener: (context, state) {
-        name = BlocProvider.of<AuthCubit>(context).name;
+        name = BlocProvider.of<AuthCubit>(context).ordinarySignInEmail;
       },
       builder: (context, state) {
         return ModalProgressHUD(
@@ -108,7 +108,8 @@ class _RegisterBodyState extends State<RegisterBody> {
                                     email: _controller2.text,
                                     password: _controller3.text,
                                     context: context);
-                            if (BlocProvider.of<AuthCubit>(context).name !=
+                            if (BlocProvider.of<AuthCubit>(context)
+                                    .ordinarySignInEmail !=
                                 null) {
                               Navigator.pushNamed(context, InfoView.id);
                             }
