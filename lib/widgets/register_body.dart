@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food/cubits/cubit/auth_cubit_cubit.dart';
-import 'package:food/views/OTP_view.dart';
 import 'package:food/views/home_view.dart';
 import 'package:food/views/info_view.dart';
 import 'package:food/views/login_view.dart';
@@ -32,7 +31,10 @@ class _RegisterBodyState extends State<RegisterBody> {
   String? name;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthCubitState>(
+    return BlocConsumer<AuthCubit, AuthCubitState>(
+      listener: (context, state) {
+        name = BlocProvider.of<AuthCubit>(context).name;
+      },
       builder: (context, state) {
         return ModalProgressHUD(
           inAsyncCall: state is AuthCubitLoading ? true : false,
@@ -106,25 +108,9 @@ class _RegisterBodyState extends State<RegisterBody> {
                                     email: _controller2.text,
                                     password: _controller3.text,
                                     context: context);
-                            if (state is AuthCubitSuccess) {
-                              if (BlocProvider.of<AuthCubit>(context)
-                                      .ordinarySignInEmail ==
-                                  null) {
-                              } else {
-                                var doc = users.doc(
-                                    BlocProvider.of<AuthCubit>(context)
-                                        .ordinarySignInEmail);
-                                await doc.get().then((doc) {
-                                  if (doc.exists) {
-                                    Navigator.pushNamed(context, OTPView.id);
-                                    print('=======');
-                                    var data = doc.data() as Map;
-                                    print(data['email']);
-                                  } else {
-                                    Navigator.pushNamed(context, InfoView.id);
-                                  }
-                                });
-                              }
+                            if (BlocProvider.of<AuthCubit>(context).name !=
+                                null) {
+                              Navigator.pushNamed(context, InfoView.id);
                             }
                           } else {
                             autovalidateMode = AutovalidateMode.always;

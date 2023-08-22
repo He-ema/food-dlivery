@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food/constants.dart';
 import 'package:food/cubits/cubit/auth_cubit_cubit.dart';
+import 'package:food/simple_bloc_observer.dart';
 import 'package:food/views/OTP_view.dart';
 import 'package:food/views/email_created_congrats_view.dart';
 import 'package:food/views/home_view.dart';
@@ -20,6 +21,7 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent, // transparent status bar
   ));
+  Bloc.observer = SimpleBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

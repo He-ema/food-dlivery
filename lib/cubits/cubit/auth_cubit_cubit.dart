@@ -121,6 +121,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      emit(AuthCubitSuccess());
     } on FirebaseAuthException catch (e) {
       emit(AuthCubitFailure());
       if (e.code == 'user-not-found') {
