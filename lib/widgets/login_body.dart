@@ -28,9 +28,13 @@ class _LoginBodyState extends State<LoginBody> {
       FirebaseFirestore.instance.collection(kUseresCollectionReference);
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _controller2 = TextEditingController();
+  String? email;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthCubitState>(
+    return BlocConsumer<AuthCubit, AuthCubitState>(
+      listener: (context, state) {
+        email = BlocProvider.of<AuthCubit>(context).ordinaryLogInEmail;
+      },
       builder: (context, state) {
         return ModalProgressHUD(
           inAsyncCall: state is AuthCubitLoading ? true : false,
@@ -102,42 +106,20 @@ class _LoginBodyState extends State<LoginBody> {
                           text: 'Login',
                           onTap: () async {
                             if (formKey.currentState!.validate()) {
-                              BlocProvider.of<AuthCubit>(context)
+                              await BlocProvider.of<AuthCubit>(context)
                                   .loginWithEmailAndPassword(
                                       email: _controller.text,
                                       password: _controller2.text,
                                       context: context);
-                              if (state is AuthCubitSuccess) {
-                                if (BlocProvider.of<AuthCubit>(context)
-                                        .ordinarySignInEmail ==
-                                    null) {
-                                } else {
-                                  var doc = users.doc(
-                                      BlocProvider.of<AuthCubit>(context)
-                                          .ordinarySignInEmail);
-                                  await doc.get().then((doc) {
-                                    if (doc.exists) {
-                                      var data = doc.data() as Map;
-                                      if (data[kState] == kVerified) {
-                                        Navigator.pushNamed(
-                                            context, HomeView.id);
-                                      } else {
-                                        AwesomeDialog(
-                                          context: context,
-                                          dialogType: DialogType.warning,
-                                          animType: AnimType.topSlide,
-                                          showCloseIcon: true,
-                                          title: 'Warning',
-                                          desc:
-                                              'You need to Verify Your account.',
-                                          btnOkOnPress: () {
-                                            Future.delayed(
-                                                Duration(milliseconds: 500),
-                                                () => Navigator.pushNamed(
-                                                    context, InfoView.id));
-                                          },
-                                        ).show();
-                                      }
+                              if (BlocProvider.of<AuthCubit>(context)
+                                      .ordinaryLogInEmail !=
+                                  null) {
+                                var doc = users.doc(_controller.text);
+                                await doc.get().then((doc) {
+                                  if (doc.exists) {
+                                    var data = doc.data() as Map;
+                                    if (data[kState] == kVerified) {
+                                      Navigator.pushNamed(context, HomeView.id);
                                     } else {
                                       AwesomeDialog(
                                         context: context,
@@ -146,7 +128,7 @@ class _LoginBodyState extends State<LoginBody> {
                                         showCloseIcon: true,
                                         title: 'Warning',
                                         desc:
-                                            'You need to continue setting your info.',
+                                            'You need to Verify Your account.',
                                         btnOkOnPress: () {
                                           Future.delayed(
                                               Duration(milliseconds: 500),
@@ -155,8 +137,24 @@ class _LoginBodyState extends State<LoginBody> {
                                         },
                                       ).show();
                                     }
-                                  });
-                                }
+                                  } else {
+                                    AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.warning,
+                                      animType: AnimType.topSlide,
+                                      showCloseIcon: true,
+                                      title: 'Warning',
+                                      desc:
+                                          'You need to continue setting your info.',
+                                      btnOkOnPress: () {
+                                        Future.delayed(
+                                            Duration(milliseconds: 500),
+                                            () => Navigator.pushNamed(
+                                                context, OTPView.id));
+                                      },
+                                    ).show();
+                                  }
+                                });
                               }
                             } else {
                               autovalidateMode = AutovalidateMode.always;

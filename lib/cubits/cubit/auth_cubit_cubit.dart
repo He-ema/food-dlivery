@@ -14,6 +14,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
   String? name;
   String? email;
   String? ordinarySignInEmail;
+  String? ordinaryLogInEmail;
   CollectionReference users =
       FirebaseFirestore.instance.collection(kUseresCollectionReference);
   dynamic signInWithGoogle() async {
@@ -113,7 +114,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
     }
   }
 
-  void loginWithEmailAndPassword(
+  Future<void> loginWithEmailAndPassword(
       {required String email,
       required String password,
       required BuildContext context}) async {
@@ -121,6 +122,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      ordinaryLogInEmail = email;
       emit(AuthCubitSuccess());
     } on FirebaseAuthException catch (e) {
       emit(AuthCubitFailure());
