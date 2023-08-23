@@ -1,10 +1,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food/cubits/cubit/auth_cubit_cubit.dart';
-import 'package:food/views/email_created_congrats_view.dart';
+import 'package:food/views/enter_new_password.dart';
 import 'package:food/widgets/OTP_field.dart';
 import 'package:food/widgets/custom_button.dart';
 import 'package:food/widgets/custom_icon.dart';
@@ -12,13 +11,14 @@ import 'package:email_otp/email_otp.dart';
 
 import '../constants.dart';
 
-class OTPViewBody extends StatefulWidget {
-  OTPViewBody({super.key});
+class OTPForgottenEmailBody extends StatefulWidget {
+  const OTPForgottenEmailBody({super.key, required this.email});
+  final String? email;
   @override
-  State<OTPViewBody> createState() => _OTPViewBodyState();
+  State<OTPForgottenEmailBody> createState() => _OTPForgottenEmailBodyState();
 }
 
-class _OTPViewBodyState extends State<OTPViewBody> {
+class _OTPForgottenEmailBodyState extends State<OTPForgottenEmailBody> {
   EmailOTP myauth = EmailOTP();
 
   String otpValue = '';
@@ -37,7 +37,7 @@ class _OTPViewBodyState extends State<OTPViewBody> {
     myauth.setConfig(
         appEmail: "Food@gmail.com",
         appName: "Food",
-        userEmail: BlocProvider.of<AuthCubit>(context).ordinarySignInEmail,
+        userEmail: widget.email,
         otpLength: 4,
         otpType: OTPType.digitsOnly);
     myauth.sendOTP();
@@ -130,14 +130,9 @@ class _OTPViewBodyState extends State<OTPViewBody> {
                   _controller3.clear();
                   _controller4.clear();
                   await myauth.verifyOTP(otp: otpValue);
-                  User? user = FirebaseAuth.instance.currentUser;
+
                   if (await myauth.verifyOTP(otp: otpValue) == true) {
-                    var doc = users.doc(BlocProvider.of<AuthCubit>(context)
-                        .ordinarySignInEmail);
-                    doc.update({
-                      kState: kVerified,
-                    });
-                    Navigator.pushNamed(context, EmailCreatedCongratsView.id);
+                    Navigator.pushNamed(context, EnterNewPassword.id);
                   } else {
                     // ignore: use_build_context_synchronously
                     AwesomeDialog(
@@ -147,8 +142,8 @@ class _OTPViewBodyState extends State<OTPViewBody> {
                       showCloseIcon: true,
                       title: 'Warning',
                       desc: 'The code isn\'t true.',
-                      btnOkOnPress: () {},
                       btnOkColor: Theme.of(context).primaryColor,
+                      btnOkOnPress: () {},
                     ).show();
                   }
                   otpValue = '';

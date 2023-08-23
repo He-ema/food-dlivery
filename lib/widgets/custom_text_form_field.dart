@@ -1,29 +1,38 @@
 import 'package:flutter/material.dart';
 
-class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField(
+class CustomTextFormField extends StatefulWidget {
+  CustomTextFormField(
       {super.key,
       required this.hint,
       this.maxLines = 1,
       this.onSaved,
       this.onChanged,
       this.controller,
-      this.icon});
+      this.icon,
+      this.isPassword = false});
   final TextEditingController? controller;
   final String hint;
   final int maxLines;
   final void Function(String?)? onSaved;
   final Function(String)? onChanged;
   final Icon? icon;
+  final bool isPassword;
+  bool obscureText = true;
+  IconButton? iconButton;
+  @override
+  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
+}
 
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     bool isUername = false;
-    hint == 'User Name' ? isUername = true : false;
+    widget.hint == 'User Name' ? isUername = true : false;
     return TextFormField(
-      controller: controller,
-      onChanged: onChanged,
-      onSaved: onSaved,
+      obscureText: (widget.isPassword && widget.obscureText),
+      controller: widget.controller,
+      onChanged: widget.onChanged,
+      onSaved: widget.onSaved,
       validator: (value) {
         if (value!.isEmpty ?? true) {
           return 'This field can\'t be empty';
@@ -35,13 +44,27 @@ class CustomTextFormField extends StatelessWidget {
           }
         }
       },
-      maxLines: maxLines,
+      maxLines: widget.maxLines,
       decoration: InputDecoration(
+        suffixIcon: widget.isPassword
+            ? GestureDetector(
+                onTap: () {
+                  widget.obscureText = !widget.obscureText;
+                  setState(() {});
+                },
+                child: widget.obscureText
+                    ? Icon(
+                        Icons.visibility,
+                        color: Theme.of(context).primaryColor,
+                      )
+                    : Icon(Icons.visibility_off,
+                        color: Theme.of(context).primaryColor))
+            : null,
         filled: true,
         fillColor: Colors.white,
-        prefixIcon: icon,
+        prefixIcon: widget.icon,
         border: buildBorder(Theme.of(context).primaryColor),
-        hintText: hint,
+        hintText: widget.hint,
         hintStyle: const TextStyle(color: Colors.grey),
         enabledBorder: buildBorder(Theme.of(context).primaryColor),
         focusedBorder: buildBorder(Theme.of(context).primaryColor),

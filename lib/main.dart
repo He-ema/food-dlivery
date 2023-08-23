@@ -5,8 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food/constants.dart';
 import 'package:food/cubits/cubit/auth_cubit_cubit.dart';
 import 'package:food/simple_bloc_observer.dart';
+import 'package:food/views/OTP_forgot_email_view.dart';
 import 'package:food/views/OTP_view.dart';
 import 'package:food/views/email_created_congrats_view.dart';
+import 'package:food/views/enter_email_forgotten.dart';
+import 'package:food/views/enter_new_password.dart';
 import 'package:food/views/home_view.dart';
 import 'package:food/views/info_view.dart';
 import 'package:food/views/login_view.dart';
@@ -51,6 +54,9 @@ class MyApp extends StatelessWidget {
           OTPView.id: (context) => OTPView(),
           EmailCreatedCongratsView.id: (context) => EmailCreatedCongratsView(),
           HomeView.id: (context) => HomeView(),
+          EnterForgottenEmail.id: (context) => EnterForgottenEmail(),
+          OTPForgotEmail.id: (context) => OTPForgotEmail(),
+          EnterNewPassword.id: (context) => EnterNewPassword(),
         },
         initialRoute: Splasher.id,
       ),

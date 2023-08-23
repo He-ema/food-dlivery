@@ -89,6 +89,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                         height: 12,
                       ),
                       CustomTextFormField(
+                        isPassword: true,
                         controller: _controller3,
                         hint: 'Password',
                         icon: Icon(

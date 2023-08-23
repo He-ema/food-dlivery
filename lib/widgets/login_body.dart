@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food/views/enter_email_forgotten.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../constants.dart';
@@ -81,6 +82,7 @@ class _LoginBodyState extends State<LoginBody> {
                         height: 12,
                       ),
                       CustomTextFormField(
+                        isPassword: true,
                         controller: _controller2,
                         hint: 'Password',
                         icon: Icon(
@@ -94,12 +96,17 @@ class _LoginBodyState extends State<LoginBody> {
                       SizedBox(
                         height: 19,
                       ),
-                      Text(
-                        'Forgot your password ?',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, EnterForgottenEmail.id);
+                        },
+                        child: Text(
+                          'Forgot your password ?',
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
                       CustomButton(
@@ -129,6 +136,8 @@ class _LoginBodyState extends State<LoginBody> {
                                         title: 'Warning',
                                         desc:
                                             'You need to Verify Your account.',
+                                        btnOkColor:
+                                            Theme.of(context).primaryColor,
                                         btnOkOnPress: () {
                                           Future.delayed(
                                               Duration(milliseconds: 500),
@@ -144,6 +153,8 @@ class _LoginBodyState extends State<LoginBody> {
                                       animType: AnimType.topSlide,
                                       showCloseIcon: true,
                                       title: 'Warning',
+                                      btnOkColor:
+                                          Theme.of(context).primaryColor,
                                       desc:
                                           'You need to continue setting your info.',
                                       btnOkOnPress: () {

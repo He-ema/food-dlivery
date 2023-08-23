@@ -87,6 +87,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
           showCloseIcon: true,
           title: 'Weak Password',
           desc: 'The password provided is too weak.',
+          btnOkColor: Theme.of(context).primaryColor,
           btnOkOnPress: () {},
         ).show();
       } else if (e.code == 'email-already-in-use') {
@@ -97,6 +98,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
           showCloseIcon: true,
           title: 'Email Exist',
           desc: 'The account already exists for that email.',
+          btnOkColor: Theme.of(context).primaryColor,
           btnOkOnPress: () {},
         ).show();
       }
@@ -109,6 +111,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
         showCloseIcon: true,
         title: 'Error',
         desc: 'Something went wrong try again.',
+        btnOkColor: Theme.of(context).primaryColor,
         btnOkOnPress: () {},
       ).show();
     }
@@ -135,6 +138,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
           title: 'User not found',
           desc: 'The email you entered isn\'t found.',
           btnOkOnPress: () {},
+          btnOkColor: Theme.of(context).primaryColor,
         ).show();
       } else if (e.code == 'wrong-password') {
         AwesomeDialog(
@@ -145,6 +149,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
           title: 'Wrong Password',
           desc: 'The Password you entered is wrong.',
           btnOkOnPress: () {},
+          btnOkColor: Theme.of(context).primaryColor,
         ).show();
       }
     } catch (e) {
@@ -157,6 +162,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
         title: 'Error',
         desc: 'Something went wrong try again.',
         btnOkOnPress: () {},
+        btnOkColor: Theme.of(context).primaryColor,
       ).show();
     }
   }
