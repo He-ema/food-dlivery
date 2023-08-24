@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/views/home_view.dart';
+import 'package:food/views/bottom_nav_bar_view.dart';
 import 'package:food/widgets/congratulations.dart';
 
 class EmailCreatedCongratsView extends StatelessWidget {
@@ -16,7 +16,7 @@ class EmailCreatedCongratsView extends StatelessWidget {
             style: TextStyle(fontSize: 18),
           ),
           onTap: () {
-            Navigator.pushNamed(context, HomeView.id);
+            Navigator.pushNamed(context, BottomNavigationBarView.id);
           }),
     );
   }

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:food/widgets/onboarding_stack.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
-  static String id = 'HomeView';
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: OnboardingStack(
+        stackView: Container(),
+        isBig: false,
+      ),
+    );
   }
 }

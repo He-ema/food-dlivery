@@ -10,7 +10,7 @@ import 'package:food/views/OTP_view.dart';
 import 'package:food/views/email_created_congrats_view.dart';
 import 'package:food/views/enter_email_forgotten.dart';
 import 'package:food/views/enter_new_password.dart';
-import 'package:food/views/home_view.dart';
+import 'package:food/views/bottom_nav_bar_view.dart';
 import 'package:food/views/info_view.dart';
 import 'package:food/views/login_view.dart';
 import 'package:food/views/onboarding_view.dart';
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
           InfoView.id: (context) => InfoView(),
           OTPView.id: (context) => OTPView(),
           EmailCreatedCongratsView.id: (context) => EmailCreatedCongratsView(),
-          HomeView.id: (context) => HomeView(),
+          BottomNavigationBarView.id: (context) => BottomNavigationBarView(),
           EnterForgottenEmail.id: (context) => EnterForgottenEmail(),
           OTPForgotEmail.id: (context) => OTPForgotEmail(),
           EnterNewPassword.id: (context) => EnterNewPassword(),

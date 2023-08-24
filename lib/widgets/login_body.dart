@@ -8,7 +8,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../constants.dart';
 import '../cubits/cubit/auth_cubit_cubit.dart';
 import '../views/OTP_view.dart';
-import '../views/home_view.dart';
+import '../views/bottom_nav_bar_view.dart';
 import '../views/info_view.dart';
 import 'custom_button.dart';
 import 'custom_text_form_field.dart';
@@ -126,7 +126,8 @@ class _LoginBodyState extends State<LoginBody> {
                                   if (doc.exists) {
                                     var data = doc.data() as Map;
                                     if (data[kState] == kVerified) {
-                                      Navigator.pushNamed(context, HomeView.id);
+                                      Navigator.pushNamed(
+                                          context, BottomNavigationBarView.id);
                                     } else {
                                       AwesomeDialog(
                                         context: context,
@@ -198,7 +199,8 @@ class _LoginBodyState extends State<LoginBody> {
                                 .doc(BlocProvider.of<AuthCubit>(context).email);
                             await doc.get().then((doc) {
                               if (doc.exists) {
-                                Navigator.pushNamed(context, HomeView.id);
+                                Navigator.pushNamed(
+                                    context, BottomNavigationBarView.id);
                               } else {
                                 Navigator.pushNamed(context, InfoView.id);
                               }

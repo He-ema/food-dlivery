@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food/cubits/cubit/auth_cubit_cubit.dart';
-import 'package:food/views/home_view.dart';
+import 'package:food/views/bottom_nav_bar_view.dart';
 import 'package:food/views/info_view.dart';
 import 'package:food/views/login_view.dart';
 import 'package:food/widgets/custom_button.dart';
@@ -125,7 +125,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                           Navigator.pushNamed(context, LoginView.id);
                         },
                         child: Text(
-                          'Alraedy have an account ?',
+                          'Already have an account ?',
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.bold,
@@ -146,7 +146,8 @@ class _RegisterBodyState extends State<RegisterBody> {
                                 .doc(BlocProvider.of<AuthCubit>(context).email);
                             await doc.get().then((doc) {
                               if (doc.exists) {
-                                Navigator.pushNamed(context, HomeView.id);
+                                Navigator.pushNamed(
+                                    context, BottomNavigationBarView.id);
                               } else {
                                 Navigator.pushNamed(context, InfoView.id);
                               }
