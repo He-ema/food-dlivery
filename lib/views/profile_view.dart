@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food/widgets/onboarding_stack.dart';
+
+import '../widgets/profile_view.body.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -6,7 +9,11 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amber,
+      backgroundColor: Colors.white,
+      body: OnboardingStack(
+        stackView: ProfileViewBody(),
+        isBig: false,
+      ),
     );
   }
 }
