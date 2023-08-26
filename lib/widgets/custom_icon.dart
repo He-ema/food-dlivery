@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 class CustomIcon extends StatelessWidget {
-  const CustomIcon({super.key});
-
+  const CustomIcon({super.key, required this.icon, this.onTap});
+  final IconData icon;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pop(context);
-      },
+      onTap: onTap ??
+          () {
+            Navigator.pop(context);
+          },
       child: Container(
         width: 45,
         height: 45,
@@ -21,7 +23,8 @@ class CustomIcon extends StatelessWidget {
           ),
         ], color: Color(0xffefedfe), borderRadius: BorderRadius.circular(16)),
         child: Icon(
-          Icons.arrow_back_ios_new,
+          icon,
+          size: 35,
           color: Theme.of(context).primaryColor,
         ),
       ),

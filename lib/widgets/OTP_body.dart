@@ -57,7 +57,9 @@ class _OTPViewBodyState extends State<OTPViewBody> {
               SizedBox(
                 height: 32,
               ),
-              CustomIcon(),
+              CustomIcon(
+                icon: Icons.arrow_back_ios_new,
+              ),
               SizedBox(
                 height: 16,
               ),

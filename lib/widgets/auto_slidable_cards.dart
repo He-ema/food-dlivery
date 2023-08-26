@@ -21,7 +21,6 @@ class _AutoSlidableCardsState extends State<AutoSlidableCards> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //color: Colors.grey.shade800.withOpacity(0.1),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -31,6 +30,10 @@ class _AutoSlidableCardsState extends State<AutoSlidableCards> {
                   autoPlay: true,
                   enlargeCenterPage: true,
                   height: 200,
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  autoPlayInterval: Duration(seconds: 3),
+                  enableInfiniteScroll: true,
+                  aspectRatio: 2,
                   onPageChanged: (index, reason) {
                     setState(() {});
                     currentIndex = index;

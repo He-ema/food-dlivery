@@ -9,6 +9,7 @@ class CustomTextFormField extends StatefulWidget {
       this.onChanged,
       this.controller,
       this.icon,
+      this.color,
       this.isPassword = false});
   final TextEditingController? controller;
   final String hint;
@@ -17,6 +18,7 @@ class CustomTextFormField extends StatefulWidget {
   final Function(String)? onChanged;
   final Icon? icon;
   final bool isPassword;
+  Color? color;
   bool obscureText = true;
   IconButton? iconButton;
   @override
@@ -61,7 +63,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                         color: Theme.of(context).primaryColor))
             : null,
         filled: true,
-        fillColor: Colors.white,
+        fillColor: widget.color ?? Colors.white,
         prefixIcon: widget.icon,
         border: buildBorder(Theme.of(context).primaryColor),
         hintText: widget.hint,
