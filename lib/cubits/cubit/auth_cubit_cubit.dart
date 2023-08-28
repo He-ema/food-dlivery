@@ -15,6 +15,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
   String? email;
   String? ordinarySignInEmail;
   String? ordinaryLogInEmail;
+  String? currentEmail;
   Map<dynamic, dynamic>? info;
   CollectionReference users =
       FirebaseFirestore.instance.collection(kUseresCollectionReference);
@@ -39,6 +40,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
       emit(AuthCubitSuccess());
       name = googleUser!.displayName;
       email = googleUser.email;
+      currentEmail = googleUser.email;
 
       return await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
@@ -60,7 +62,8 @@ class AuthCubit extends Cubit<AuthCubitState> {
         kSecondName: secondName,
         kPhone: phone,
         kEmail: email,
-        kState: state
+        kState: state,
+        kImage: null,
       });
       emit(AuthCubitSuccess());
     } catch (e) {
@@ -77,6 +80,8 @@ class AuthCubit extends Cubit<AuthCubitState> {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       ordinarySignInEmail = email;
+      currentEmail = email;
+
       emit(AuthCubitSuccess());
     } on FirebaseAuthException catch (e) {
       emit(AuthCubitFailure());
@@ -127,6 +132,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       ordinaryLogInEmail = email;
+      currentEmail = email;
       emit(AuthCubitSuccess());
     } on FirebaseAuthException catch (e) {
       emit(AuthCubitFailure());
