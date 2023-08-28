@@ -10,6 +10,7 @@ class CustomTextFormField extends StatefulWidget {
       this.controller,
       this.icon,
       this.color,
+      this.enabled,
       this.isPassword = false});
   final TextEditingController? controller;
   final String hint;
@@ -21,6 +22,7 @@ class CustomTextFormField extends StatefulWidget {
   Color? color;
   bool obscureText = true;
   IconButton? iconButton;
+  bool? enabled;
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
 }
@@ -31,6 +33,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     bool isUername = false;
     widget.hint == 'User Name' ? isUername = true : false;
     return TextFormField(
+      enabled: widget.enabled,
       obscureText: (widget.isPassword && widget.obscureText),
       controller: widget.controller,
       onChanged: widget.onChanged,

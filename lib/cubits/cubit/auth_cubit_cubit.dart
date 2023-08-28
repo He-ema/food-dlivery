@@ -15,6 +15,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
   String? email;
   String? ordinarySignInEmail;
   String? ordinaryLogInEmail;
+  Map<dynamic, dynamic>? info;
   CollectionReference users =
       FirebaseFirestore.instance.collection(kUseresCollectionReference);
   dynamic signInWithGoogle() async {
@@ -165,5 +166,16 @@ class AuthCubit extends Cubit<AuthCubitState> {
         btnOkColor: Theme.of(context).primaryColor,
       ).show();
     }
+  }
+
+  Future<void> getAuthData({required String email}) async {
+    var doc = users.doc(email);
+    await doc.get().then((doc) {
+      if (doc.exists) {
+        var data = doc.data() as Map;
+        info = data;
+        print(info);
+      } else {}
+    });
   }
 }
