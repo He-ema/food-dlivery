@@ -8,5 +8,6 @@ const kSecondName = 'secondName';
 const kEmail = 'email';
 const kPhone = 'Phone';
 const kState = 'state';
+const kImage = 'image';
 const kVerified = 'verified';
 const kNotVerified = 'not';
