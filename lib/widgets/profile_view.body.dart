@@ -12,7 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-import 'bottom_sheet_border.dart';
+import 'bottom_sheet_body.dart';
 
 class ProfileViewBody extends StatefulWidget {
   ProfileViewBody({super.key, this.onTap});
@@ -52,6 +52,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
 
   String? filePath;
   bool isLoading = false;
+  bool changed = false;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthCubitState>(
@@ -68,6 +69,9 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
               setState(() {});
               await BlocProvider.of<AuthCubit>(context).getAuthData(
                   email: BlocProvider.of<AuthCubit>(context).currentEmail!);
+              setData();
+              changed = false;
+              setState(() {});
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -78,6 +82,68 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                   children: [
                     SizedBox(
                       height: 55,
+                    ),
+                    changed
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () async {
+                                    isLoading = true;
+                                    setState(() {});
+                                    try {
+                                      await users
+                                          .doc(BlocProvider.of<AuthCubit>(
+                                                  context)
+                                              .currentEmail!)
+                                          .update({
+                                        kFirstName: _controller.text,
+                                        kSecondName: _controller2.text,
+                                        kPhone: _controller4.text
+                                      });
+                                    } on Exception catch (e) {
+                                      print(e);
+                                    }
+                                    isLoading = false;
+                                    setState(() {});
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                  },
+                                  child: Text(
+                                    'Save',
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: Text(
+                                    'Save',
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .primaryColor
+                                          .withOpacity(0.4),
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                    SizedBox(
+                      height: 16,
                     ),
                     Stack(
                       children: [
@@ -125,12 +191,20 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                         Container(
                             width: MediaQuery.of(context).size.width * 0.4,
                             child: CustomTextFormField(
+                              onChanged: (value) {
+                                changed = true;
+                                setState(() {});
+                              },
                               hint: 'First Name',
                               controller: _controller,
                             )),
                         Container(
                             width: MediaQuery.of(context).size.width * 0.4,
                             child: CustomTextFormField(
+                              onChanged: (value) {
+                                changed = true;
+                                setState(() {});
+                              },
                               hint: 'Second Name',
                               controller: _controller2,
                             )),
@@ -168,6 +242,10 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                       height: 12,
                     ),
                     CustomTextFormField(
+                      onChanged: (value) {
+                        changed = true;
+                        setState(() {});
+                      },
                       hint: 'Phone',
                       controller: _controller4,
                     ),
@@ -177,13 +255,32 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                     CustomButton(
                       text: 'Change password',
                       onTap: () {
-                        showBottomSheet(
-                          enableDrag: true,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16)),
-                          context: context,
-                          builder: (context) => ButtomSheetBorder(),
-                        );
+                        if (BlocProvider.of<AuthCubit>(context).email != null) {
+                          ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'You are using Gmail ',
+                                textAlign: TextAlign.center,
+                              ),
+                              shape: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide.none),
+                              margin: EdgeInsets.only(
+                                  bottom: 100, right: 10, left: 10),
+                              behavior: SnackBarBehavior.floating,
+                              backgroundColor: Theme.of(context).primaryColor,
+                            ),
+                          );
+                        } else {
+                          showBottomSheet(
+                            enableDrag: true,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
+                            context: context,
+                            builder: (context) => ButtomSheetBody(),
+                          );
+                        }
                       },
                     )
                   ],
