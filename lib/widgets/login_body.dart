@@ -6,7 +6,7 @@ import 'package:food/views/enter_email_forgotten.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../constants.dart';
-import '../cubits/cubit/auth_cubit_cubit.dart';
+import '../cubits/auth_cubit/auth_cubit_cubit.dart';
 import '../views/OTP_view.dart';
 import '../views/bottom_nav_bar_view.dart';
 import '../views/info_view.dart';

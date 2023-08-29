@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food/constants.dart';
-import 'package:food/cubits/cubit/auth_cubit_cubit.dart';
 import 'package:food/views/OTP_view.dart';
 import 'package:food/widgets/custom_button.dart';
 import 'package:food/widgets/custom_text_form_field.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import '../cubits/auth_cubit/auth_cubit_cubit.dart';
 import '../views/email_created_congrats_view.dart';
 import 'custom_icon.dart';
 

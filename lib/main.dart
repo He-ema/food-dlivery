@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food/constants.dart';
-import 'package:food/cubits/cubit/auth_cubit_cubit.dart';
 import 'package:food/simple_bloc_observer.dart';
 import 'package:food/views/OTP_forgot_email_view.dart';
 import 'package:food/views/OTP_view.dart';
@@ -17,6 +16,7 @@ import 'package:food/views/onboarding_view.dart';
 import 'package:food/views/register_view.dart';
 import 'package:food/views/splash_view.dart';
 
+import 'cubits/auth_cubit/auth_cubit_cubit.dart';
 import 'firebase_options.dart';
 
 void main() async {

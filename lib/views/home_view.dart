@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food/cubits/cubit/auth_cubit_cubit.dart';
 import 'package:food/widgets/onboarding_stack.dart';
 
+import '../cubits/auth_cubit/auth_cubit_cubit.dart';
 import '../widgets/home_view_body.dart';
 
 class HomeView extends StatefulWidget {

@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food/cubits/cubit/auth_cubit_cubit.dart';
 import 'package:food/views/email_created_congrats_view.dart';
 import 'package:food/widgets/OTP_field.dart';
 import 'package:food/widgets/custom_button.dart';
@@ -11,6 +10,7 @@ import 'package:food/widgets/custom_icon.dart';
 import 'package:email_otp/email_otp.dart';
 
 import '../constants.dart';
+import '../cubits/auth_cubit/auth_cubit_cubit.dart';
 
 class OTPViewBody extends StatefulWidget {
   OTPViewBody({super.key});
