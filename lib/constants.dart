@@ -11,3 +11,6 @@ const kState = 'state';
 const kImage = 'image';
 const kVerified = 'verified';
 const kNotVerified = 'not';
+const kMessage = 'Message';
+const kTime = 'Time';
+const kSender = 'Sender';

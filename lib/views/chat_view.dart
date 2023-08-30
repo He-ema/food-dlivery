@@ -10,14 +10,11 @@ class ChatView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ChatCubit(),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: OnboardingStack(
-          stackView: ChatViewBody(),
-          isBig: false,
-        ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: OnboardingStack(
+        stackView: ChatViewBody(),
+        isBig: false,
       ),
     );
   }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../models/message_model.dart';
+
 class ChatBubble extends StatelessWidget {
   ChatBubble({
     required this.message,
     super.key,
   });
-  final String message;
+  final MessageModel message;
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -21,7 +23,7 @@ class ChatBubble extends StatelessWidget {
               bottomRight: Radius.circular(50)),
         ),
         child: Text(
-          message,
+          message.messageText,
           style: TextStyle(color: Colors.white, fontSize: 15),
         ),
       ),
@@ -34,7 +36,7 @@ class ChatBubbleForFriend extends StatelessWidget {
     required this.message,
     super.key,
   });
-  final String message;
+  final MessageModel message;
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -50,7 +52,7 @@ class ChatBubbleForFriend extends StatelessWidget {
               bottomLeft: Radius.circular(50)),
         ),
         child: Text(
-          message,
+          message.messageText,
           style: TextStyle(color: Colors.white, fontSize: 15),
         ),
       ),
