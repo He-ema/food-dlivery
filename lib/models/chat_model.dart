@@ -1,7 +1,7 @@
 import 'package:food/constants.dart';
 
 class ChatModel {
-  final String? image;
+  final String image;
   final String name;
   final String lastMessage;
   final String Date;

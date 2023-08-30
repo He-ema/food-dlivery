@@ -147,23 +147,13 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                     ),
                     Stack(
                       children: [
-                        BlocProvider.of<AuthCubit>(context).info![kImage] ==
-                                null
-                            ? CircleAvatar(
-                                radius:
-                                    MediaQuery.of(context).size.width * 0.25,
-                                backgroundColor: Theme.of(context).primaryColor,
-                                backgroundImage:
-                                    AssetImage('assets/images/avatar.png'),
-                              )
-                            : CircleAvatar(
-                                radius:
-                                    MediaQuery.of(context).size.width * 0.25,
-                                backgroundColor: Theme.of(context).primaryColor,
-                                backgroundImage: NetworkImage(
-                                    BlocProvider.of<AuthCubit>(context)
-                                        .info![kImage]),
-                              ),
+                        CircleAvatar(
+                          radius: MediaQuery.of(context).size.width * 0.25,
+                          backgroundColor: Theme.of(context).primaryColor,
+                          backgroundImage: NetworkImage(
+                              BlocProvider.of<AuthCubit>(context)
+                                  .info![kImage]),
+                        ),
                         Positioned(
                           bottom: 20,
                           right: 15,

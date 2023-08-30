@@ -63,7 +63,8 @@ class AuthCubit extends Cubit<AuthCubitState> {
         kPhone: phone,
         kEmail: email,
         kState: state,
-        kImage: null,
+        kImage:
+            'https://firebasestorage.googleapis.com/v0/b/food-dlivery-97e93.appspot.com/o/images%2Favatar.png?alt=media&token=cdcecaa2-6649-4cf1-94e2-21df39fa66bf',
       });
       emit(AuthCubitSuccess());
     } catch (e) {

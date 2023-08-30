@@ -12,7 +12,6 @@ import 'package:food/views/enter_new_password.dart';
 import 'package:food/views/bottom_nav_bar_view.dart';
 import 'package:food/views/info_view.dart';
 import 'package:food/views/login_view.dart';
-import 'package:food/views/messages_chat_view.dart';
 import 'package:food/views/onboarding_view.dart';
 import 'package:food/views/register_view.dart';
 import 'package:food/views/splash_view.dart';
@@ -58,7 +57,6 @@ class MyApp extends StatelessWidget {
           EnterForgottenEmail.id: (context) => EnterForgottenEmail(),
           OTPForgotEmail.id: (context) => OTPForgotEmail(),
           EnterNewPassword.id: (context) => EnterNewPassword(),
-          MessagesChatView.id: (context) => MessagesChatView(),
         },
         initialRoute: Splasher.id,
       ),
