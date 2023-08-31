@@ -4,7 +4,7 @@ class ChatModel {
   final String image;
   final String name;
   final String lastMessage;
-  final String Date;
+  final String date;
   final String email;
 
   ChatModel(
@@ -12,14 +12,14 @@ class ChatModel {
       required this.name,
       required this.lastMessage,
       required this.email,
-      required this.Date});
+      required this.date});
 
   factory ChatModel.fromJson(jsonData) {
     return ChatModel(
       image: jsonData[kImage],
       name: jsonData[kFirstName] + ' ' + jsonData[kSecondName],
       lastMessage: jsonData[kFirstName],
-      Date: jsonData[kFirstName],
+      date: jsonData[kFirstName],
       email: jsonData[kEmail],
     );
   }

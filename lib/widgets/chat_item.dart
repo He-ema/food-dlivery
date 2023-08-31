@@ -7,7 +7,11 @@ class ChatItem extends StatelessWidget {
   const ChatItem({
     super.key,
     required this.chatmodel,
+    required this.date,
+    required this.lastMessge,
   });
+  final String date;
+  final String lastMessge;
   final ChatModel chatmodel;
   @override
   Widget build(BuildContext context) {
@@ -37,9 +41,13 @@ class ChatItem extends StatelessWidget {
                 ]),
             child: ListTile(
               leading: Image.network(chatmodel.image),
-              title: Text(chatmodel.name),
-              subtitle: Text(chatmodel.lastMessage),
-              trailing: Text(chatmodel.Date),
+              title: Text(
+                chatmodel.name,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              contentPadding: EdgeInsets.all(10),
+              subtitle: Text(lastMessge),
+              trailing: Text(date),
             ),
           ),
         ),

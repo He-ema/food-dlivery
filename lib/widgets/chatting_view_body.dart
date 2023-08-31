@@ -137,13 +137,18 @@ class _ChattingViewBodyState extends State<ChattingViewBody> {
                           if (_controller.text != ' ' &&
                               _controller.text != '') {
                             currentChat!.add({
-                              kTime: DateTime.now(),
+                              kTime: DateTime.now().millisecond,
                               kSender: BlocProvider.of<AuthCubit>(context)
                                   .currentEmail!,
                               kMessage: _controller.text,
                             });
                             _controller.clear();
                           }
+                          _controller2.animateTo(
+                            _controller2.position.minScrollExtent,
+                            duration: Duration(seconds: 1),
+                            curve: Curves.fastOutSlowIn,
+                          );
                         },
                         child: Icon(
                           Icons.send,
