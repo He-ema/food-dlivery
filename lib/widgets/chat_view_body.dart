@@ -17,18 +17,28 @@ class ChatViewBody extends StatefulWidget {
 
 class _ChatViewBodyState extends State<ChatViewBody> {
   List<ChatModel> chatsList = [];
+  List<MessageModel> messagesList = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    BlocProvider.of<ChatCubit>(context).getChats();
+    getBlocChats();
   }
 
+  void getBlocChats() async {
+    await BlocProvider.of<ChatCubit>(context).getChats();
+  }
+
+  int length = 0;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ChatCubit, ChatState>(
       listener: (context, state) {
         chatsList = BlocProvider.of<ChatCubit>(context).usersList;
+        messagesList =
+            BlocProvider.of<ChatCubit>(context).permenanetMessagesList;
+
+        length = messagesList.length;
       },
       builder: (context, state) {
         return Padding(
@@ -48,33 +58,13 @@ class _ChatViewBodyState extends State<ChatViewBody> {
               Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.zero,
-                  itemCount: chatsList.length,
+                  itemCount: length,
                   itemBuilder: (context, index) {
-//                     CollectionReference currentChat = FirebaseFirestore.instance
-//                         .collection(sortName(
-//                             BlocProvider.of<AuthCubit>(context).currentEmail! +
-//                                 chatsList[index].email));
-//                     List<MessageModel> currentMessage = [];
-//                     currentMessage = BlocProvider.of<ChatCubit>(context)
-//                         .getLastMessage(currentChat);
-//                     String? date;
-//                     String? lastmessage;
-//                     if (currentMessage.length == 0) {
-//                       date = '';
-//                       lastmessage = '';
-//                     } else {
-//                       lastmessage = currentMessage[0].messageText;
-// //                       int time = currentMessage[0].time as int ;
-// //                       var dt = DateTime.fromMillisecondsSinceEpoch(time);
-
-// // // 12 Hour format:
-// //                       var d12 = DateFormat('MM/dd/yyyy, hh:mm a').format(dt);
-//                       date = '';
-//                     }
+                    print(messagesList[index].time.millisecondsSinceEpoch);
                     return ChatItem(
                       chatmodel: chatsList[index],
                       date: 'date',
-                      lastMessge: 'lastmessage',
+                      lastMessge: messagesList[index].messageText,
                     );
                   },
                 ),
@@ -84,13 +74,5 @@ class _ChatViewBodyState extends State<ChatViewBody> {
         );
       },
     );
-  }
-
-  String sortName(String theRequiredTosort) {
-    List<String> charList = theRequiredTosort.split('');
-    charList.sort();
-
-    String sortedName = charList.join();
-    return sortedName;
   }
 }

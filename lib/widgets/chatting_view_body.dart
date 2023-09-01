@@ -7,6 +7,7 @@ import 'package:food/cubits/chat_cubit/chat_cubit.dart';
 import 'package:food/widgets/chat_bubble.dart';
 import 'package:food/widgets/custom_icon.dart';
 
+import '../helpers/sort.dart';
 import '../models/chat_model.dart';
 import '../models/message_model.dart';
 
@@ -21,19 +22,11 @@ class ChattingViewBody extends StatefulWidget {
 class _ChattingViewBodyState extends State<ChattingViewBody> {
   CollectionReference? currentChat;
 
-  String sortName(String theRequiredTosort) {
-    List<String> charList = theRequiredTosort.split('');
-    charList.sort();
-
-    String sortedName = charList.join();
-    return sortedName;
-  }
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    currentChat = FirebaseFirestore.instance.collection(sortName(
+    currentChat = FirebaseFirestore.instance.collection(sort().sortName(
         BlocProvider.of<AuthCubit>(context).currentEmail! +
             widget.chatModel.email));
     BlocProvider.of<ChatCubit>(context).getMessages(currentChat!);
@@ -61,7 +54,12 @@ class _ChattingViewBodyState extends State<ChattingViewBody> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    CustomIcon(icon: Icons.arrow_back_ios_new),
+                    CustomIcon(
+                        icon: Icons.arrow_back_ios_new,
+                        onTap: () async {
+                          Navigator.pop(context);
+                          await BlocProvider.of<ChatCubit>(context).getChats();
+                        }),
                   ],
                 ),
                 SizedBox(
@@ -137,7 +135,7 @@ class _ChattingViewBodyState extends State<ChattingViewBody> {
                           if (_controller.text != ' ' &&
                               _controller.text != '') {
                             currentChat!.add({
-                              kTime: DateTime.now().millisecond,
+                              kTime: DateTime.now(),
                               kSender: BlocProvider.of<AuthCubit>(context)
                                   .currentEmail!,
                               kMessage: _controller.text,
