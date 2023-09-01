@@ -67,8 +67,8 @@ class ChatCubit extends Cubit<ChatState> {
         .orderBy(kTime, descending: true)
         .get();
     if (temp.docs.length == 0) {
-      permenanetMessagesList.add(
-          MessageModel(messageText: '', sender: '', time: Timestamp.now()));
+      permenanetMessagesList
+          .add(MessageModel(messageText: '', sender: '', time: null));
     } else {
       for (final documents in temp.docs) {
         permenanetMessagesList.add(MessageModel.fromJson(documents));

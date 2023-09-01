@@ -4,7 +4,7 @@ import 'package:food/constants.dart';
 class MessageModel {
   final String messageText;
   final String sender;
-  final Timestamp time;
+  final Timestamp? time;
 
   MessageModel(
       {required this.messageText, required this.sender, required this.time});

@@ -60,11 +60,9 @@ class _ChatViewBodyState extends State<ChatViewBody> {
                   padding: EdgeInsets.zero,
                   itemCount: length,
                   itemBuilder: (context, index) {
-                    print(messagesList[index].time.millisecondsSinceEpoch);
                     return ChatItem(
                       chatmodel: chatsList[index],
-                      date: 'date',
-                      lastMessge: messagesList[index].messageText,
+                      message: messagesList[index],
                     );
                   },
                 ),
