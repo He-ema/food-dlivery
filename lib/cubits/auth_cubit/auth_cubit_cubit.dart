@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:food/constants.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -49,20 +50,21 @@ class AuthCubit extends Cubit<AuthCubitState> {
     }
   }
 
-  void createUser(
+  Future<void> createUser(
       {required String firstName,
       required String secondName,
       required String phone,
       required String email,
-      required String state}) {
+      required String state}) async {
     emit(AuthCubitLoading());
     try {
-      users.doc(email).set({
+      await users.doc(email).set({
         kFirstName: firstName,
         kSecondName: secondName,
         kPhone: phone,
         kEmail: email,
         kState: state,
+        kToken: await FirebaseMessaging.instance.getToken(),
         kImage:
             'https://firebasestorage.googleapis.com/v0/b/food-dlivery-97e93.appspot.com/o/images%2Favatar.png?alt=media&token=cdcecaa2-6649-4cf1-94e2-21df39fa66bf',
       });

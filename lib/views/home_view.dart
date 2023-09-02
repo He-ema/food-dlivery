@@ -20,16 +20,9 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
     BlocProvider.of<ChatCubit>(context).currentEmail =
         BlocProvider.of<AuthCubit>(context).currentEmail;
-    if (BlocProvider.of<AuthCubit>(context).email != null) {
-      BlocProvider.of<AuthCubit>(context)
-          .getAuthData(email: BlocProvider.of<AuthCubit>(context).email!);
-    } else if (BlocProvider.of<AuthCubit>(context).ordinaryLogInEmail != null) {
-      BlocProvider.of<AuthCubit>(context).getAuthData(
-          email: BlocProvider.of<AuthCubit>(context).ordinaryLogInEmail!);
-    } else {
-      BlocProvider.of<AuthCubit>(context).getAuthData(
-          email: BlocProvider.of<AuthCubit>(context).ordinarySignInEmail!);
-    }
+
+    BlocProvider.of<AuthCubit>(context)
+        .getAuthData(email: BlocProvider.of<AuthCubit>(context).currentEmail!);
   }
 
   @override

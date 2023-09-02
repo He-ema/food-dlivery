@@ -46,6 +46,8 @@ dependencies:
   path: ^1.8.3
   liquid_pull_to_refresh: ^3.0.1
   intl: ^0.18.1
+  http: ^0.13.4
+  firebase_messaging: ^14.6.7
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

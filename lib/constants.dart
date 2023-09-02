@@ -14,3 +14,6 @@ const kNotVerified = 'not';
 const kMessage = 'Message';
 const kTime = 'Time';
 const kSender = 'Sender';
+const kToken = 'Token';
+const kServerToken =
+    'AAAA2xMhZA0:APA91bGSg8GxDmumw8qYGCL57GpyzKST8tWjKYJi9tGZRgzQPUXqZSIs-jCkvJURrFwcSuT9erJER9ABGFqTvSH0ZN37_2d8GeYaqXX-f3BmLImoCt4nA_aqGgakN3SgyOEptaHLsAUy';

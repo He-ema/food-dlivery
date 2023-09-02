@@ -37,12 +37,12 @@ class _InfoViewBodyState extends State<InfoViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.0),
-      child: BlocBuilder<AuthCubit, AuthCubitState>(
-        builder: (context, state) {
-          return ModalProgressHUD(
-            inAsyncCall: state is AuthCubitLoading ? true : false,
+    return BlocBuilder<AuthCubit, AuthCubitState>(
+      builder: (context, state) {
+        return ModalProgressHUD(
+          inAsyncCall: state is AuthCubitLoading ? true : false,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             child: SingleChildScrollView(
               child: Form(
                 autovalidateMode: autovalidateMode,
@@ -99,9 +99,9 @@ class _InfoViewBodyState extends State<InfoViewBody> {
                     ),
                     CustomButton(
                       text: 'Next',
-                      onTap: () {
+                      onTap: () async {
                         if (formKey.currentState!.validate()) {
-                          BlocProvider.of<AuthCubit>(context).createUser(
+                          await BlocProvider.of<AuthCubit>(context).createUser(
                               firstName: widget._controller.text,
                               secondName: widget._controller2.text,
                               phone: widget._controller3.text,
@@ -130,9 +130,9 @@ class _InfoViewBodyState extends State<InfoViewBody> {
                 ),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

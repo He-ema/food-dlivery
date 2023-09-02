@@ -141,6 +141,11 @@ class _ChattingViewBodyState extends State<ChattingViewBody> {
                               kMessage: _controller.text,
                             });
                             _controller.clear();
+                            BlocProvider.of<ChatCubit>(context)
+                                .sendNotification(
+                                    title: widget.chatModel.name,
+                                    body: _controller.text,
+                                    token: widget.chatModel.token);
                           }
                           _controller2.animateTo(
                             _controller2.position.minScrollExtent,

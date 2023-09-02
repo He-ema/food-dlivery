@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food/models/chat_model.dart';
@@ -6,7 +8,7 @@ import 'package:meta/meta.dart';
 import '../../constants.dart';
 import '../../helpers/sort.dart';
 import '../../models/message_model.dart';
-
+import 'package:http/http.dart' as http;
 part 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
@@ -76,5 +78,41 @@ class ChatCubit extends Cubit<ChatState> {
       }
     }
     emit(ChatSuccess());
+  }
+
+  void sendNotification(
+      {required String title,
+      required String body,
+      required String token,
+      String? image}) async {
+    try {
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'key=$kServerToken',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'notification': <String, dynamic>{
+              'body': body,
+              'title': title,
+              'image': image == '123'
+                  ? 'https://png.pngtree.com/png-clipart/20230218/ourmid/pngtree-islamic-greeting-card-ramdan-kareem-mosque-masjid-with-moon-decoration-png-image_6603599.png'
+                  : image,
+            },
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'id': '1',
+              'status': 'done'
+            },
+            'to': token,
+          },
+        ),
+      );
+    } catch (e) {
+      print('error');
+    }
   }
 }
