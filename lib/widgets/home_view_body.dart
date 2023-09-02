@@ -1,83 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:food/widgets/custom_icon.dart';
-import 'package:food/widgets/custom_text_form_field.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:food/models/product_model.dart';
+import 'package:food/services/get_product_service.dart';
+import 'package:food/widgets/widgets_above_slider.dart';
 
 import 'auto_slidable_cards.dart';
+import 'grid_item.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 65,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return FutureBuilder<List<ProductModel>>(
+      future: AllProductService().getAllProducts(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<ProductModel> products = snapshot.data!;
+          return Column(
             children: [
-              Text(
-                'Find Your\nFavourite Food',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              WidgetsAboveSlider(),
+              SizedBox(
+                height: 12,
               ),
-              Stack(
-                children: [
-                  CustomIcon(
-                    onTap: () {},
-                    icon: Icons.notifications_none,
-                  ),
-                  Positioned(
-                    top: 10,
-                    right: 12,
-                    child: CircleAvatar(
-                      radius: 4,
-                      backgroundColor: Colors.red,
-                    ),
-                  )
-                ],
+              AutoSlidableCards(),
+              Expanded(
+                child: MasonryGridView.builder(
+                  padding: EdgeInsets.zero,
+                  //physics: NeverScrollableScrollPhysics(),
+                  itemCount: 30,
+                  gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  itemBuilder: (context, index) =>
+                      GridViewItem(product: products[index]),
+                ),
               ),
             ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                  width: MediaQuery.of(context).size.width * 0.70,
-                  child: CustomTextFormField(
-                    color: Theme.of(context).primaryColor.withOpacity(0.1),
-                    hint: 'What do you want to order ?',
-                    icon: Icon(
-                      Icons.search,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  )),
-              CustomIcon(
-                icon: Icons.format_list_bulleted_rounded,
-                onTap: () {},
-              )
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 12,
-        ),
-        AutoSlidableCards(),
-        SizedBox(
-          height: 12,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Column(
-            children: [],
-          ),
-        ),
-      ],
+          );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }
