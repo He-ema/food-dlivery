@@ -30,7 +30,19 @@ class _CartViewBodyState extends State<CartViewBody> {
       },
       builder: (context, state) {
         if (cartItems.isEmpty) {
-          return Center(child: Lottie.asset('assets/images/empty.json'));
+          return Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                Lottie.asset('assets/images/empty.json'),
+                Text(
+                  'Cart is Empty',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ]));
         } else {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -54,11 +66,71 @@ class _CartViewBodyState extends State<CartViewBody> {
                     padding: EdgeInsets.zero,
                     itemCount: cartItems.length,
                     itemBuilder: (context, index) {
-                      return CartItem(
-                        name: cartItems[index].name,
-                        price: cartItems[index].price,
-                        quantity: cartItems[index].quantity,
-                        image: cartItems[index].image,
+                      return Dismissible(
+                        onDismissed: (direction) {
+                          setState(() {});
+                        },
+                        confirmDismiss: (direction) async {
+                          if (direction == DismissDirection.endToStart) {
+                            await BlocProvider.of<CartCubit>(context)
+                                .deleteItem(cartItems[index].id);
+                          }
+                          if (direction == DismissDirection.startToEnd) {
+                            await BlocProvider.of<CartCubit>(context)
+                                .deleteItem(cartItems[index].id);
+                          }
+                        },
+                        key: ValueKey<CartItemModel>(cartItems[index]),
+                        background: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 5),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(16)),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 30),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Icon(
+                                    size: 40,
+                                    Icons.delete,
+                                  ),
+                                  Icon(
+                                    size: 40,
+                                    Icons.delete,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        child: CartItem(
+                          AddOnTap: () async {
+                            await BlocProvider.of<CartCubit>(context)
+                                .increaseQuantity(cartItems[index].id,
+                                    cartItems[index].quantity);
+                            setState(() {});
+                          },
+                          minusOnTap: () async {
+                            await BlocProvider.of<CartCubit>(context)
+                                .decreaseQuantity(cartItems[index].id,
+                                    cartItems[index].quantity);
+                            setState(() {});
+                            if (cartItems[index].quantity == 0) {
+                              await BlocProvider.of<CartCubit>(context)
+                                  .deleteItem(cartItems[index].id);
+                              setState(() {});
+                            }
+                          },
+                          name: cartItems[index].name,
+                          price: cartItems[index].price,
+                          quantity: cartItems[index].quantity,
+                          image: cartItems[index].image,
+                        ),
                       );
                     },
                   ),

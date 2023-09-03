@@ -6,11 +6,15 @@ class CartItem extends StatelessWidget {
       required this.name,
       required this.quantity,
       required this.price,
-      required this.image});
+      required this.image,
+      required this.AddOnTap,
+      required this.minusOnTap});
   final String name;
   final String image;
   final int quantity;
   final int price;
+  final void Function() AddOnTap;
+  final void Function() minusOnTap;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -60,12 +64,15 @@ class CartItem extends StatelessWidget {
             ),
             Row(
               children: [
-                Container(
-                  padding: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Icon(Icons.remove),
+                GestureDetector(
+                  onTap: minusOnTap,
+                  child: Container(
+                    padding: EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Icon(Icons.remove),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -73,12 +80,15 @@ class CartItem extends StatelessWidget {
                       style: TextStyle(
                           color: Theme.of(context).primaryColor, fontSize: 21)),
                 ),
-                Container(
-                  padding: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Icon(Icons.add),
+                GestureDetector(
+                  onTap: AddOnTap,
+                  child: Container(
+                    padding: EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Icon(Icons.add),
+                  ),
                 ),
               ],
             )

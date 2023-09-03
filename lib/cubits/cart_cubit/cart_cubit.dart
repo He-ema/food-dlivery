@@ -57,4 +57,16 @@ class CartCubit extends Cubit<CartState> {
       emit(CartFailure());
     }
   }
+
+  Future<void> increaseQuantity(int id, int Quantity) async {
+    await cart.doc(id.toString()).update({
+      kQuantity: Quantity + 1,
+    });
+  }
+
+  Future<void> decreaseQuantity(int id, int Quantity) async {
+    await cart.doc(id.toString()).update({
+      kQuantity: Quantity - 1,
+    });
+  }
 }
