@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:food/models/product_model.dart';
 import 'package:food/widgets/product_bottom_sheet_body.dart';
 
+import '../models/cart_item_model.dart';
+
 class GridViewItem extends StatelessWidget {
-  const GridViewItem({super.key, required this.product});
+  const GridViewItem(
+      {super.key, required this.product, required this.cartItem});
   final ProductModel product;
+  final List<CartItemModel> cartItem;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,9 +22,15 @@ class GridViewItem extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             context: context,
             builder: (context) => BroductBottomSheetBody(
-                images: product.images,
-                description: product.description,
-                brand: product.brand),
+              id: product.id,
+              image: product.image,
+              name: product.name,
+              price: product.price,
+              images: product.images,
+              description: product.description,
+              brand: product.brand,
+              cartItems: cartItem,
+            ),
           );
         },
         child: Container(
@@ -33,55 +43,44 @@ class GridViewItem extends StatelessWidget {
           ]),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Stack(
+            child: Column(
               children: [
-                Column(
+                Image.network(product.image),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  product.name,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 21,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Image.network(product.image),
-                    SizedBox(
-                      height: 12,
+                    Text(
+                      '\$' '${product.price + 50}',
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 21,
+                          decoration: TextDecoration.lineThrough),
                     ),
                     Text(
-                      product.name,
+                      '\$' '${product.price}',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 21,
                         fontWeight: FontWeight.bold,
+                        fontSize: 21,
                       ),
                     ),
-                    SizedBox(
-                      height: 12,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          '\$' '${product.price + 50}',
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 21,
-                              decoration: TextDecoration.lineThrough),
-                        ),
-                        Text(
-                          '\$' '${product.price}',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 21,
-                          ),
-                        ),
-                      ],
-                    )
                   ],
-                ),
-                Positioned(
-                    child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.shopping_cart,
-                          color: Colors.white,
-                        )))
+                )
               ],
             ),
           ),

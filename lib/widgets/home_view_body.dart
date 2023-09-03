@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:food/models/product_model.dart';
 import 'package:food/services/get_product_service.dart';
 import 'package:food/widgets/widgets_above_slider.dart';
 
+import '../cubits/cart_cubit/cart_cubit.dart';
+import '../models/cart_item_model.dart';
 import 'auto_slidable_cards.dart';
 import 'grid_item.dart';
 
@@ -20,11 +23,20 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   ScrollController _controller = ScrollController();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    BlocProvider.of<CartCubit>(context).getCartItems();
+  }
+
+  List<CartItemModel> cartItems = [];
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<ProductModel>>(
       future: AllProductService().getAllProducts(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          cartItems = BlocProvider.of<CartCubit>(context).cartItems;
           List<ProductModel> products = snapshot.data!;
           return Column(
             children: [
@@ -65,7 +77,10 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                       }
                     });
 
-                    return GridViewItem(product: products[index]);
+                    return GridViewItem(
+                      product: products[index],
+                      cartItem: cartItems,
+                    );
                   },
                 ),
               ),

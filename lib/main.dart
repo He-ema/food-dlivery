@@ -18,6 +18,7 @@ import 'package:food/views/register_view.dart';
 import 'package:food/views/splash_view.dart';
 
 import 'cubits/auth_cubit/auth_cubit_cubit.dart';
+import 'cubits/cart_cubit/cart_cubit.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -46,6 +47,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ChatCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CartCubit(),
         ),
       ],
       child: MaterialApp(

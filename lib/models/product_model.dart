@@ -5,6 +5,7 @@ class ProductModel {
   final List<dynamic> images;
   final String description;
   final String brand;
+  final int id;
 
   ProductModel(
       {required this.name,
@@ -12,6 +13,7 @@ class ProductModel {
       required this.description,
       required this.brand,
       required this.image,
+      required this.id,
       required this.images});
 
   factory ProductModel.fromJson(jsonData) {
@@ -22,6 +24,7 @@ class ProductModel {
       images: jsonData['images'],
       description: jsonData['description'],
       brand: jsonData['brand'],
+      id: jsonData['id'],
     );
   }
 }
