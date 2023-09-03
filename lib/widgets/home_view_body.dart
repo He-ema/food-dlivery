@@ -7,8 +7,17 @@ import 'package:food/widgets/widgets_above_slider.dart';
 import 'auto_slidable_cards.dart';
 import 'grid_item.dart';
 
-class HomeViewBody extends StatelessWidget {
-  const HomeViewBody({super.key});
+class HomeViewBody extends StatefulWidget {
+  HomeViewBody({super.key});
+
+  @override
+  State<HomeViewBody> createState() => _HomeViewBodyState();
+}
+
+class _HomeViewBodyState extends State<HomeViewBody> {
+  bool hasAccess = true;
+  bool hasScrolled = true;
+  ScrollController _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +32,41 @@ class HomeViewBody extends StatelessWidget {
               SizedBox(
                 height: 12,
               ),
-              AutoSlidableCards(),
+              Visibility(
+                  maintainState: true,
+                  maintainAnimation: true,
+                  visible: hasScrolled,
+                  child: AnimatedOpacity(
+                    duration: const Duration(seconds: 1),
+                    onEnd: () {
+                      hasScrolled = hasAccess;
+                      setState(() {});
+                    },
+                    curve: Curves.fastOutSlowIn,
+                    opacity: hasAccess ? 1 : 0,
+                    child: AutoSlidableCards(),
+                  )),
               Expanded(
                 child: MasonryGridView.builder(
+                  controller: _controller,
                   padding: EdgeInsets.zero,
                   //physics: NeverScrollableScrollPhysics(),
                   itemCount: 30,
                   gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
-                  itemBuilder: (context, index) =>
-                      GridViewItem(product: products[index]),
+                  itemBuilder: (context, index) {
+                    _controller.addListener(() {
+                      if (_controller.position.pixels != 0) {
+                        hasAccess = false;
+                        setState(() {});
+                      } else {
+                        hasAccess = true;
+                        setState(() {});
+                      }
+                    });
+
+                    return GridViewItem(product: products[index]);
+                  },
                 ),
               ),
             ],

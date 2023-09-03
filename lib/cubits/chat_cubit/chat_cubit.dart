@@ -27,23 +27,21 @@ class ChatCubit extends Cubit<ChatState> {
       int index = 0;
       permenanetMessagesList.clear();
       for (var doc in event.docs) {
-        usersList.add(ChatModel.fromJson(doc));
-        CollectionReference currentChat = FirebaseFirestore.instance.collection(
-            sort().sortName(currentEmail! + usersList[index].email));
+        if (doc.id != currentEmail) {
+          usersList.add(ChatModel.fromJson(doc));
+          CollectionReference currentChat = FirebaseFirestore.instance
+              .collection(
+                  sort().sortName(currentEmail! + usersList[index].email));
 
-        String currentChatAsString =
-            sort().sortName(currentEmail! + usersList[index].email);
-        await getLastMessage(
-            collection: currentChat, collectionAsString: currentChatAsString);
+          String currentChatAsString =
+              sort().sortName(currentEmail! + usersList[index].email);
+          await getLastMessage(
+              collection: currentChat, collectionAsString: currentChatAsString);
 
-        index++;
-        // print('===========================================');
-        // print('$index message is ');
-        // print(permenanetMessagesList[index].messageText);
-        // print('===========================================');
+          index++;
+        }
       }
-      print('the length');
-      print(permenanetMessagesList.length);
+
       emit(ChatSuccess());
     });
   }

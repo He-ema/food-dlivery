@@ -79,8 +79,8 @@ class GridViewItem extends StatelessWidget {
                     child: IconButton(
                         onPressed: () {},
                         icon: Icon(
-                          Icons.favorite,
-                          color: Colors.red,
+                          Icons.shopping_cart,
+                          color: Colors.white,
                         )))
               ],
             ),
