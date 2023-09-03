@@ -5,9 +5,15 @@ class CustomButton extends StatelessWidget {
     super.key,
     this.onTap,
     required this.text,
+    this.color,
+    this.Textcolor,
+    this.alternativeText,
   });
 
   final String text;
+  final Color? color;
+  final Color? Textcolor;
+  final Text? alternativeText;
   final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
@@ -19,15 +25,16 @@ class CustomButton extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: Theme.of(context).primaryColor,
+          color: color ?? Theme.of(context).primaryColor,
         ),
         child: Center(
-            child: Text(
-          text,
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        )),
+            child: alternativeText ??
+                Text(
+                  text,
+                  style: TextStyle(
+                    color: Textcolor ?? Colors.white,
+                  ),
+                )),
       ),
     );
   }
